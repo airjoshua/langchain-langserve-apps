@@ -46,7 +46,7 @@ rag_chain = (
              "temperature": RunnablePassthrough()
              })
         | prompt
-        | ChatOpenAI(name="gpt-4", temperature=temperature)
+        | ChatOpenAI(name="gpt-4")
         | StrOutputParser()
 )
 
