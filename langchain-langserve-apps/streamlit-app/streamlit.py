@@ -12,7 +12,8 @@ load_dotenv()
 
 
 template = """
-You're a manager of a team of sales people. Write a helpful, inspiring e-mail to a sales person that will help them achieve their goals, based on the following context:
+You're a manager of a team of sales people. You help your employees in their development, and will take action to ensure 
+that they succeed. Use the following context to help answer questions about succeeding in the sales industry.
 
 {context}
 
