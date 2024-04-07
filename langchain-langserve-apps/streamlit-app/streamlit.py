@@ -57,6 +57,7 @@ chain = rag_chain
 st.title('Sales-GPT')
 
 with st.form('my_form'):
-    text = st.text_area()
+    text = st.text_area('Enter Text', "What's up with your sales employee?")
     submitted = st.form_submit_button('Submit')
-    st.info(rag_chain.invoke(text))
+    if submitted:
+        st.info(rag_chain.invoke(text))
