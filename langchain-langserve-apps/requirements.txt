@@ -1,0 +1,17 @@
+anyscale
+chromadb
+python-dotenv
+fastapi
+gcloud
+langchain
+langchain-openai
+langchain-pinecone
+langserve[all]
+langsmith
+numpy
+pandas
+pydantic
+pypandoc
+truera
+wandb
+unstructured
