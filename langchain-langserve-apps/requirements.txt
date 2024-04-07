@@ -12,6 +12,7 @@ numpy
 pandas
 pydantic
 pypandoc
+streamlit
 truera
 wandb
 unstructured

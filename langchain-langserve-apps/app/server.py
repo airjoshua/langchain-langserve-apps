@@ -30,4 +30,3 @@ if __name__ == "__main__":
 
 # gcloud run deploy [your-service-name] --source . --port 8001 --allow-unauthenticated --region us-central1 --set-env-vars=OPENAI_API_KEY=your_key
 
-# add_routes(app, rag_conversation_chain, path="/rag-conversation")
