@@ -25,7 +25,7 @@ Question: {question}
 prompt = ChatPromptTemplate.from_template(template)
 
 
-llm = ChatOpenAI(name="gpt-4")
+#llm = ChatOpenAI(name="gpt-4")
 
 vectorstore = PineconeVectorStore.from_existing_index(
     index_name="sales",
@@ -42,10 +42,11 @@ retriever = vectorstore.as_retriever(
 rag_chain = (
         RunnableParallel(
             {"context": retriever,
-             "question": RunnablePassthrough()
+             "question": RunnablePassthrough(),
+             "temperature": RunnablePassthrough()
              })
         | prompt
-        | llm
+        | ChatOpenAI(name="gpt-4", temperature=temperature)
         | StrOutputParser()
 )
 
@@ -60,4 +61,5 @@ with st.form('my_form'):
     text = st.text_area('Enter sales-related question')
     submitted = st.form_submit_button('Submit')
     if submitted:
-        st.info(rag_chain.invoke(text))
+        st.write_stream(rag_chain.invoke(text, ))
+        #st.info(rag_chain.invoke(text, ))
