@@ -29,4 +29,4 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 # gcloud run deploy [your-service-name] --source . --port 8001 --allow-unauthenticated --region us-central1 --set-env-vars=OPENAI_API_KEY=your_key
-
+gcloud run deploy gen-ai-app --source . --port 8001 --allow-unauthenticated --region us-west1 --set-env-vars=OPENAI_API_KEY=your_key
