@@ -27,7 +27,6 @@ Question: {question}
 prompt = ChatPromptTemplate.from_template(template)
 
 
-#llm = ChatOpenAI(name="gpt-4")
 
 vectorstore = PineconeVectorStore.from_existing_index(
     index_name="sales",
@@ -63,5 +62,4 @@ with st.form('my_form'):
     text = st.text_area('Enter sales-related question')
     submitted = st.form_submit_button('Submit')
     if submitted:
-        #st.write_stream(rag_chain.invoke(text))
-        st.info(rag_chain.invoke(text, ))
+        response = st.write_stream(rag_chain.stream(text))
