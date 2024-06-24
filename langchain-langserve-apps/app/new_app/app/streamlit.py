@@ -1,15 +1,11 @@
-import streamlit as st
-from operator import itemgetter
 from dotenv import load_dotenv
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-from langchain_core.pydantic_v1 import BaseModel
 from langchain_core.runnables import RunnableParallel, RunnablePassthrough
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 
 load_dotenv()
-
 
 template = """
 You're a manager of a team of sales people. You help your employees in their development, and will take action to ensure 
@@ -23,22 +19,17 @@ the scope.
 Question: {question}
 """
 
-
 prompt = ChatPromptTemplate.from_template(template)
-
-
 
 vectorstore = PineconeVectorStore.from_existing_index(
     index_name="sales",
     embedding=OpenAIEmbeddings(model="text-embedding-3-large"),
 )
 
-
 retriever = vectorstore.as_retriever(
     search_type="similarity",
     search_kwargs={"k": 10},
 )
-
 
 rag_chain = (
         RunnableParallel(
@@ -50,9 +41,6 @@ rag_chain = (
         | ChatOpenAI(name="gpt-4")
         | StrOutputParser()
 )
-
-
-
 
 chain = rag_chain
 
