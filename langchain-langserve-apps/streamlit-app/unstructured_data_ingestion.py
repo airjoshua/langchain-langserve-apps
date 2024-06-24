@@ -129,9 +129,7 @@ pinecone_index = "lp-hr-rag"
 # )
 
 
-files = Path(
-    "/Users/airjoshua/gen_ai/gen-ai/langchain/langchain-app/data/corpporate_policies"
-).glob("*.pdf")
+files = Path("").glob("*.pdf")
 # pdfs = [get_unstructured_pdf_elements(pdf) for pdf in pdfs]
 # docs = split_docs(pdfs)
 

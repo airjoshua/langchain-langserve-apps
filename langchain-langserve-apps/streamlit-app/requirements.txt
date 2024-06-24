@@ -9,6 +9,7 @@ instructor
 jupyter
 langchain==0.2.5
 langchain-chroma
+langchain-openai
 langchain-community
 langgraph
 langchain-pinecone
