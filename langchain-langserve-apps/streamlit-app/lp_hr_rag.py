@@ -27,7 +27,7 @@ load_dotenv()
 class Prompts(Enum):
     rag = dedent(
         """
-        {llama_3}You are an assistant that can answer questions about, and explain, LP's documents. Cite your sources, including
+        You are an assistant that can answer questions about, and explain, LP's documents. Cite your sources, including
         the 1) 'file name', 2) 'page number', and 3) 'url' that informed your answer. If you don't how to respond, just say that you don't know.
         ############
         LP's documents: {context}
@@ -156,7 +156,7 @@ def get_basic_rag_chain(model):
         model="llama3-70b-8192",
     )
     cohere = ChatCohere(model="command-r")
-    models = {"cohere": cohere, "GPT-4o": gpt_4o, "LLama 3": llama_3}
+    models = {"cohere": cohere, "GPT-4o": gpt_4o, "Llama 3": llama_3}
     retriever = get_pinecone_retriever(
         index_name="lp",
         embedding=OpenAIEmbeddings(model="text-embedding-3-small"),
@@ -167,7 +167,7 @@ def get_basic_rag_chain(model):
         base_retriever=retriever,
     )
     prompt = ChatPromptTemplate.from_template(
-        LlamaPrompts.rag.value if "llama_3" else Prompts.rag.value
+        LlamaPrompts.rag.value if model == "Llama 3" else Prompts.rag.value
     )
 
     return (
@@ -190,6 +190,7 @@ def test_llm(chain):
         "What services are not covered in the white plan?",
         "Explain the different health plans available to salaried employees",
         "Describe our dental benefits for salaried employees",
+        "What services are covered in the dental plan?",
         "what days are holidays?",
         "Explain our personal leave policy",
         "What is the hybrid work policy?",
@@ -224,16 +225,15 @@ def query_pc(query, index, embeddings, k=3):
 st.title("LP")
 
 with st.chat_message("user"):
-    st.write("Ask about ")
+    st.write("Ask about LP")
 
 model_selection = st.selectbox(
     "Pick an LLM",
-    ("GPT-4o", "LLama 3"))
+    ("GPT-4o", "Llama 3"))
 rag_chain = get_basic_rag_chain(model=model_selection)
-st.write("You chose:", model_selection)
 with st.form("my_form"):
     text = st.text_area(
-        "Enter text:",
+        "Enter text:", "When are the company holidays?",
     )
     submitted = st.form_submit_button("Submit")
     if submitted:
