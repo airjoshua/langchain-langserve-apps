@@ -30,9 +30,9 @@ class Prompts(Enum):
         You are an assistant that can answer questions about, and explain, LP's documents. Cite your sources, including
         the 1) 'file name', 2) 'page number', and 3) 'url' that informed your answer. If you don't how to respond, just say that you don't know.
         ############
-        LP's documents: {context}
-        ############
         Question: {question}
+        ############
+        LP's documents: {context}
         ############
         Answer:
         """
