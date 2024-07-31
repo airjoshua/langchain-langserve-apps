@@ -2,8 +2,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from langserve import add_routes
-from sales_chatbot import sales_chat
-
+#from rag_conversation.chain import chain
+from rag_apps.lp_hr_rag import rag_chain
 load_dotenv()
 
 app = FastAPI()
@@ -16,11 +16,12 @@ async def redirect_root_to_docs():
 
 add_routes(
     app,
-    sales_chat.chain,
-    path="/sales_bot",
+    rag_chain,
+    path="/Users/airjoshua/Documents/langchain-apps/langchain-langserve-apps/packages/lp/rag_apps",
     playground_type="default",
-    enable_feedback_endpoint=True,
-    enable_public_trace_link_endpoint=True,
+
+    #enable_feedback_endpoint=True,
+    #enable_public_trace_link_endpoint=True,
 )
 
 if __name__ == "__main__":

@@ -1,7 +1,17 @@
+arize
+arize[LLM_Evaluation]
+arize-otel
+arize-phoenix
+arize-phoenix-evals
+opentelemetry-sdk
+opentelemetry-exporter-otlp
+openinference-instrumentation-langchain
+openinference-instrumentation-dspy
 python-dotenv
 fastapi
 firecrawl-py
 gcloud
+guardrails-ai
 html2text
 huggingface_hub
 ipython
@@ -24,6 +34,7 @@ langchain-together
 langserve[all]
 langsmith
 numpy
+openinference-instrumentation-guardrails
 pandas
 pinecone
 pydantic
@@ -32,7 +43,7 @@ streamlit
 tavily-python
 text-generation
 transformers
-truera
 wandb
 unstructured
 unstructured[pdf]
+
