@@ -557,7 +557,7 @@ def get_compression_retriever(k, index_name, embedding):
     )
 
     return ContextualCompressionRetriever(
-        base_compressor=CohereRerank(top_n=k // 2),
+        base_compressor=CohereRerank(top_n=5),
         base_retriever=base_retriever,
     )
 
