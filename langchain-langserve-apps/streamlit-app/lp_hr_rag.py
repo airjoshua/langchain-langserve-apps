@@ -428,7 +428,7 @@ def rag_with_alternatives(llm, index_name, llm_temperature):
             ("human", LlamaPrompts.rag.value if "llama" in llm else Prompts.rag.value),
         ]
     )
-    rag_chain_ = (
+    return (
             {
                 "context": compression_retriever | format_docs,  # compression_retriever
                 "question": RunnablePassthrough(),
@@ -437,19 +437,7 @@ def rag_with_alternatives(llm, index_name, llm_temperature):
             | chat_model.with_config(config=config)
             | StrOutputParser()
     )
-    return rag_chain_
 
-    return (
-            {
-                "context": compression_retriever | format_docs,  # compression_retriever
-                "request": RunnablePassthrough(),
-            }
-            | ChatPromptTemplate.from_template(
-        LlamaPrompts.rag.value if "llama" in llm else Prompts.rag.value
-    )
-            | chat_model.with_config(config=config)
-            | StrOutputParser()
-    )
 
 
 def get_few_shot_examples():
@@ -557,7 +545,7 @@ def get_compression_retriever(k, index_name, embedding):
     )
 
     return ContextualCompressionRetriever(
-        base_compressor=CohereRerank(top_n=5),
+        base_compressor=CohereRerank(top_n=k // 2),
         base_retriever=base_retriever,
     )
 
@@ -607,7 +595,14 @@ def query_pc(query, index, embeddings, k=3):
     )
 
 
+LangChainInstrumentor().instrument()
 
+register_otel(
+    endpoints=Endpoints.ARIZE,
+    space_key=os.environ["ARIZE_SPACE_KEY"],
+    api_key=os.environ["ARIZE_OTEL_API_KEY"],
+    model_id="benefits-rag",
+)
 
 
 # rag_chain = rag_with_sources(
@@ -633,21 +628,13 @@ questions = [
     "what is the out of pocket limit for the white plan?",
     "what is the out of pocket limit for the orange plan?",
 ]
-# few_shots()
 rag_chain = rag_with_alternatives(
     # llm="llama_405b_3_1",
     llm="gpt-4o",
     index_name="benefits-rag",
     llm_temperature=0,
 )
-# lp-products
-# for question in questions:
-#     print(rag_chain.invoke(question))
-# x = rag_chain.invoke("what is the deductible for the white plan?")
-# question = "What's the annual deductible in the orange plan?"
-# print(rag_chain.invoke(question))
-# test_llm(rag_chain)
-# test_llm(rag_chain)
+
 
 
 st.title("LP HR")
